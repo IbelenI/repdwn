@@ -1,11 +1,14 @@
+
+
+# Scirpt version 0.1
+# 8th July 2020
+
 #Dependencies:
 library(anytime) #v0.3.7
 library(lubridate) #v1.7.8
 
 #Local Path must be set here:
 loca <- getwd()
-
-#my local: G:\00_PhD_II\Rfolder\macrocovid\repdwpdf
 
 # According to source, reports are updated 
 # each day 14:00 CEST (UTC+2).
@@ -33,7 +36,7 @@ if (length ( list.files(loca, "updatelog"))==0) {
   last = 159
   # sdat = date ()
   
-} else {
+} else { #needs improvement.
   
   # If there is "updatelog" file
   # this is un update. Check the log.
@@ -70,7 +73,7 @@ urlfix = "https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActu
 # If the resulting interval contains the "problematic"
 # reports (44 and 45), the method will take them out and
 # download them.
-reports <- c(frst:last)
+reports <- c(frst:last) #needs improvement.
 
 if (frst-last==0){
   ffix <- paste0 ( "Actualizacion_", last ,"_COVID-19_China.pdf" )
@@ -81,11 +84,11 @@ if (frst-last==0){
                  mode = "wb" )
 }else{
   # Solution to problem1:
-  if (length (reports%in%c(44,45))>0){      
+  if (sum (1*(reports%in%c(44,45)>0))>0){      
     reports <- reports [- which (reports%in%c(44,45))]
     
     # Special cases, if the sequence include report 44:
-    if (length (reports%in%c(44))>0){
+    if (sum (1*(reports%in%c(44))>0)>0){
       download.file (paste0(
         urlfix,
         "Actualizacion_44_COVID_1200.pdf"), 
@@ -95,7 +98,7 @@ if (frst-last==0){
     }
     
     # Special cases, if the sequence include report 45:
-    if (length (reports%in%c(45))>0){
+    if (length (1*reports%in%c(45))>0){
       download.file (paste0(
         urlfix,
         "Actualizacion_45_COVID.pdf"), 
@@ -130,7 +133,8 @@ if (frst-last==0){
 
 #Update log file to be used on following updates
 logdate <- data.frame (
-  numrep = last, date = date())
+  numrep = last, #needs improvement.
+  date = date())
 
 if (length ( list.files(loca,
                         "updatelog"))==0) {
